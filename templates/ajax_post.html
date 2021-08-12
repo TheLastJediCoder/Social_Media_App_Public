@@ -1,0 +1,19 @@
+<div class="col-md-6 mb-10" id="ajax_post" style="width: 100%;">
+{%if postList%}
+	{%for post in postList%}
+	<div class="row g-0 border rounded overflow-auto flex-md-row mb-2 shadow-sm h-md-250 position-relative">
+		<div class="col p-2 d-flex flex-column position-static">
+			<!-- <h4 class="mb-0">Post By</h4> -->
+			<!-- <div class="mb-1 text-muted">Nov 11</div> -->
+			<p class="mb-auto">{{post.post}}</p>
+		</div>
+	</div>
+	{%endfor%}
+{%else%}
+	<div class="row g-0 border rounded overflow-auto flex-md-row mb-2 shadow-sm h-md-250 position-relative">
+		<div class="col p-2 d-flex flex-column position-static">
+			<h4 class="mb-0">You haven't posted anything yet!</h4>
+		</div>
+	</div>
+{%endif%}
+</div>

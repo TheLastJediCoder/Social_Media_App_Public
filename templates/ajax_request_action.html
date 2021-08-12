@@ -1,0 +1,20 @@
+<div id="request-alert" class="alert alert-{{request_result}} alert-dismissible fade show" role="alert">
+	{{request_text}}
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{%if friend != 'None'%}
+<a href="/friend_page/{{friend.user_id}}" style="color: inherit; text-decoration: inherit;">
+<main class="col div_search_friend">
+	<div class="card shadow-sm">
+		<div class="card-body">
+			<div class="d-flex justify-content-between align-items-center">
+				<h5 class="text me-2">{{friend.user_name}}</h5>
+				<!-- <div class="btn-group me-2"> -->
+					<!-- <button type="button" class="btn btn-sm btn-outline-success">Message</button> -->
+				<!-- </div> -->
+			</div>
+		</div>
+	</div>
+</main>
+</a>
+{%endif%}

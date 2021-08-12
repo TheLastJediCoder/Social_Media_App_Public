@@ -1,0 +1,155 @@
+{% extends 'base_template.html' %}
+{% block body %}
+<div class="container-fluid m-0 p-0" style="height: 90%;">
+	<div class="row m-0 p-0 example" style="height: 100%;">
+		<div class="col-md-9 p-0 example" style="height: 100%; overflow-y: auto;">
+			<div class="text-center">
+				<h5>Friend Request</h5>
+			</div>
+			<div class="carousel carousel-dark px-1">
+				<div class="row row-cols-md-auto g-3 mx-4" id="friend_request_div" style="overflow-x: hidden; display: block; white-space: nowrap;">
+				{%if requestList%}
+					{%for request in requestList%}
+					<div class="col text-wrap" style="display: inline-block;">
+						<div class="card shadow-sm">
+							<div class="card-body">
+								<div class="d-flex justify-content-between align-items-center">
+									<h5 class="text me-2">{{request.User.user_name}}</h5>
+									<div class="btn-group me-2">
+										<button type="button" value="accept/{{request.Request.request_id}}" class="btn btn-sm btn-outline-success">Accept</button>
+										<button type="button" value="decline/{{request.Request.request_id}}" class="btn btn-sm btn-outline-danger">Decline</button>
+									</div>
+									<button type="button" id="btn-close" class="btn-close" aria-label="Close"></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					{%endfor%}
+				{%endif%}
+					<div class="col" id="no_pending_request" style="display: none;">
+						<div class="card shadow-sm">
+							<div class="card-body">
+								<div class="d-flex justify-content-between align-items-center">
+									<h5 class="text me-2">No pending friend request</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+				<button class="carousel-control-prev pt-2" style="width: 50px;" id="slideLeft" type="button" data-bs-target="#carouselExampleDark">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next pt-2" style="width: 50px;" id="slideRight" type="button"	data-bs-target="#carouselExampleDark">
+					<span class="carousel-control-next-icon dark" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
+			</br>
+			<div class="text-center">
+				<h5>Friends</h5>
+			</div>
+			<div class="col-4 mx-auto my-2">
+				<input type="text" id="search_friend" class="form-control" placeholder="Friend Name">
+			</div>
+			<div class="row row-cols-md-auto g-3 mx-4 mb-2" id="div_search_friend">
+			{%if friendList%}
+				{%for friend in friendList%}
+				<a href="/friend_page/{{friend.User.user_id}}" style="color: inherit; text-decoration: inherit;">
+				<main class="col div_search_friend">
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<div class="d-flex justify-content-between align-items-center">
+								<h5 class="text me-2">{{friend.User.user_name}}</h5>
+								<!-- <div class="btn-group me-2"> -->
+									<!-- <button type="button" class="btn btn-sm btn-outline-success">Message</button> -->
+								<!-- </div> -->
+							</div>
+						</div>
+					</div>
+				</main>
+				</a>
+				{%endfor%}
+			{%else%}
+				<div class="col" id="no_friend" style="display: none;">
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<div class="d-flex justify-content-between align-items-center">
+								<h5 class="text me-2">No Friend Found</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+			{%endif%}
+			</div>
+		</div>
+		
+		<div class="col col-md-3 bg-secondary">
+			<div class="position-fixed">
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(function() {
+		$('button').click(function() {
+			var temp = $(this)
+			$.ajax({
+				type: "GET",
+				url: "/modify_request/" + $(this).val(),
+				success: function(data){
+					temp.parent().parent().parent().parent().parent().remove(); 
+					$(div_search_friend).append(data);
+					$("#request-alert").fadeTo(2000, 500).slideUp(500, function(){
+						$("#request-alert").slideUp(500);
+					});
+					if ( $('#friend_request_div').children().length <= 1 ) {
+						$('#no_pending_request').css('display', 'inline-block');
+						$('#slideLeft').css('display', 'none');
+						$('#slideRight').css('display', 'none');
+					}
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+		}); 
+	});
+	$("#search_friend").keyup(function() {
+		var filter = $(this).val(),
+		count = 0;
+		$('#div_search_friend main').each(function() {
+			if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+				$(this).hide();
+			} else {
+				$(this).show();
+				count++;
+			}
+		});
+	});
+	
+	const buttonRight = document.getElementById('slideRight');
+	const buttonLeft = document.getElementById('slideLeft');
+
+	buttonRight.onclick = function () {
+		document.getElementById('friend_request_div').scrollLeft += 200;
+	};
+	buttonLeft.onclick = function () {
+		document.getElementById('friend_request_div').scrollLeft -= 200;
+	};
+	if ( $('#friend_request_div').children().length <= 1 ) {
+		$('#no_pending_request').css('display', 'inline-block');
+		$('#slideLeft').css('display', 'none');
+		$('#slideRight').css('display', 'none');
+	}
+	$('#btn-close').on('click', function(){
+		$(this).parent().parent().parent().parent().remove();  
+		if ( $('#friend_request_div').children().length <= 1 ) {
+			$('#no_pending_request').css('display', 'inline-block');
+			$('#slideLeft').css('display', 'none');
+			$('#slideRight').css('display', 'none');
+		}
+	});
+</script>
+{% endblock body %}

@@ -1,0 +1,92 @@
+{% extends 'base_template.html' %}
+{% block body %}
+<script>
+	$(function() {
+		$('button').click(function() {
+			
+			var val = document.getElementById('post_box').value;
+
+			if (/^\s*$/g.test(val) || val.indexOf('\n') != -1) {
+				<!-- alert('Post content empty'); -->
+			}
+			else{
+				$.ajax({
+					url: '/post',
+					data: $('form').serialize(),
+					type: 'POST',
+					success: function(data){
+						$(ajax_post).replaceWith(data);
+						$('#post_box').val('');
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
+			}
+			
+			
+		}); 
+	});
+</script>
+<div class="container-fluid m-0 p-0" style="height: 90%;">
+	<div class="row m-0 p-0" style="height: 100%;">
+		<div class="col-md-9 position-fixed p-0" style="height: 20%;">
+			<form class="row mx-1 g-2 p-1" role="form">
+				<div class="col">
+					<!-- <input autocomplete="off" type="text" class="form-control col-form-label" name="post" id="post_box" placeholder="Post"> -->
+					<textarea class="form-control" style="overflow-y: scroll; resize: none;" name="post" id="post_box" placeholder="Post" rows="3" required></textarea>
+				</div>
+				<div class="col-auto">
+					<button type="button" id="send_post" class="btn btn-primary mb-3">Post</button>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-9 p-0 example" style="height: 80%; overflow-y: auto; margin-top: 100px;">
+			<div class="row m-0 p-0" style="height: 100%;">
+				<div class="col-md-6 mb-10" id="ajax_post" style="width: 100%;">
+					
+					<!-- post loop -->
+				{%if postList%}
+					{%for post in postList%}
+					<div class="row g-0 border rounded overflow-auto flex-md-row mb-2 shadow-sm h-md-250 position-relative">
+						<div class="col p-2 d-flex flex-column position-static">
+							<!-- <h4 class="mb-0">Post By</h4> -->
+							<!-- <div class="mb-1 text-muted">Nov 11</div> -->
+							<p class="mb-auto" style="white-space: pre-line" style="white-space: pre-line">{{post.post}}</p>
+						</div>
+					</div>
+					{%endfor%}
+					<!-- post loop -->
+					<!-- if no post -->
+				{%else%}
+					<div class="row g-0 border rounded overflow-auto flex-md-row mb-2 shadow-sm h-md-250 position-relative">
+						<div class="col p-2 d-flex flex-column position-static">
+							<h4 class="mb-0">You haven't posted anything yet!</h4>
+						</div>
+					</div>
+				{%endif%}
+					<!-- if no post end-->
+				</div>
+			</div>
+		</div>
+		<div class="col col-md-3 bg-secondary">
+			<div class="position-fixed">
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	<!-- $('html,body').animate({scrollTop: document.body.scrollHeight},"fast"); -->
+	$('form input').keydown(function (e) {
+    if (e.keyCode == 13) {
+			e.preventDefault();
+			return false;
+		}
+	});
+	<!-- $("#post_box").keyup(function(event) { -->
+    <!-- if (event.keyCode === 13) { -->
+			<!-- $("#send_post").click(); -->
+		<!-- } -->
+	<!-- }); -->
+</script>
+{% endblock body %}

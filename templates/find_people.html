@@ -1,0 +1,86 @@
+{%extends 'base_template.html'%}
+{%block body%}
+<script>
+	$(function() {
+		$('button').click(function() {
+			var temp = $(this)
+			$.ajax({
+				type: "GET",
+				url: "/send_request/" + $(this).val(),
+				success: function(data){
+					temp.parent().parent().parent().parent().parent().parent().remove(); 
+					$(request_send_alert).replaceWith(data);
+					$("#request-alert").fadeTo(2000, 500).slideUp(500, function(){
+						$("#request-alert").slideUp(500);
+					});
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+		}); 
+	});
+</script>
+<div class="container-fluid m-0 p-0" style="height: 90%;">
+	<div class="row m-0 p-0 example" style="height: 100%;">
+		<div class="col-md-9 p-0 example" style="height: 100%; overflow-y: auto;">
+			<div class="text-center" id="request_send_alert">
+				<h5>Find People</h5>
+			</div>
+			<div class="col-4 mx-auto my-2">
+				
+				<input type="text" id="search_friend" class="form-control" placeholder="Enter Name">
+			</div>
+			<div class="row row-cols-md-auto g-3 mx-4 mb-2" id="div_search_friend">
+			{%if peopleList%}
+				{%for people in peopleList%}
+				<main class="col div_search_friend" id="{{people.user_id}}">
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<div class="d-flex justify-content-between align-items-center">
+								<h5 class="text me-2">{{people.user_name}}</h5>
+								<div class="btn-group me-2">
+									<form role="form">
+										<button type="button" class="btn btn-sm btn-outline-primary" value="{{people.user_id}}">Send Request</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+				{%endfor%}
+			{%else%}	
+				<div class="col" id="no_friend" style="display: none;">
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<div class="d-flex justify-content-between align-items-center">
+								<h5 class="text me-2">No User Found</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+			{%endif%}
+			</div>
+		</div>
+		
+		<div class="col col-md-3 bg-secondary">
+			<div class="position-fixed">
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$("#search_friend").keyup(function() {
+		var filter = $(this).val(),
+		count = 0;
+		$('#div_search_friend main').each(function() {
+			if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+				$(this).hide();
+			} else {
+				$(this).show();
+				count++;
+			}
+		});
+	});
+</script>
+{%endblock body%}

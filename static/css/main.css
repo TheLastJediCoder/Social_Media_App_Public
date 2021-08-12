@@ -1,0 +1,22 @@
+html {
+	height: 100%;
+	margin: 0px;
+}
+body {
+	height: 100%;
+	margin: 0px;
+}
+.example::-webkit-scrollbar {
+	display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.chat-form {
+	background: #DDDDDD;
+	position: fixed;
+	bottom: 0;
+}

@@ -1,0 +1,113 @@
+{%extends 'base_template.html'%}
+{%block body%}
+<div class="container-fluid m-0 p-0" style="height: 90%;">
+	<div class="row m-0 p-0" style="height: 100%;">
+		<div class="col-md-9 position-fixed p-0" style="height: 10%;">
+			<form class="row mx-1 g-2 p-1">
+				<div class="col">
+					<h4>{{userInfo.user_name}}</h4>
+				</div>
+				<div class="col-auto">
+					<a href="/remove/{{userInfo.user_id}}" role="button" class="btn btn-danger mb-3">Remove</a>
+					<!-- <button type="button" class="btn btn-danger mb-3">Remove</button> -->
+				</div>
+			</form>
+		</div>
+		<div class="col-md-9 p-0 example" style="height: 90%; overflow-y: auto; margin-top: 50px;">
+			<div class="row m-0 p-0" style="height: 100%;">
+				<div class="col-md-6 mb-10" style="width: 100%;">
+				{%if postList%}
+					{%for post in postList%}
+					<div class="row g-0 border rounded overflow-auto flex-md-row mb-2 shadow-sm h-md-250 position-relative">
+						<div class="col p-2 d-flex flex-column position-static">
+							<!-- <h4 class="mb-0">Post By</h4> -->
+							<!-- <div class="mb-1 text-muted">Nov 11</div> -->
+							<p class="mb-auto">{{post.post}}</p>
+						</div>
+					</div>
+					{%endfor%}
+					<!-- post loop -->
+					<!-- if no post -->
+				{%else%}
+					<div class="row g-0 border rounded overflow-auto flex-md-row mb-2 shadow-sm h-md-250 position-relative">
+						<div class="col p-2 d-flex flex-column position-static">
+							<h4 class="mb-0">Haven't posted anything yet!</h4>
+						</div>
+					</div>
+				{%endif%}
+				</div>
+			</div>
+		</div>
+		<div class="col col-md-3 bg-secondary p-0 m-0" style="height: 100%; overflow-y: auto;">
+			<div class="w-auto p-0 mb-3" id="append_message" style="height: 90%; overflow-y: auto;">
+			{%if messageList%}
+				{%for message in messageList%}
+					{%if message.message_from_user_id == session['user_id']%}
+					<div class="d-flex flex-row-reverse bd-highlight m-3 w-auto">
+						<div class="p-2 bd-highlight rounded text-wrap w-75" style="background-color:#82E0AA;">{{message.message}}</div>
+					</div>
+					{%else%}
+					<div class="d-flex flex-row bd-highlight m-3 w-auto">
+						<div class="p-2 bd-highlight rounded text-wrap w-75" style="background-color:#85C1E9;">{{message.message}}</div>
+					</div>
+					{%endif%}
+				{%endfor%}
+			{%endif%}
+			</div>
+			<div class="col chat-form col-md-3 p-1 m-0" id="message_input_form" style="height: 10%;">
+				<form class="row g-1 w-auto m-1 p-0">
+					<div class="col">
+						<input autocomplete="off" type="text" id="message_input" class="form-control col-form-label" placeholder="Type Message here...">
+					</div>
+					<div class="col-auto">
+						<button type="submit" class="btn btn-primary mb-3">Send</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js" integrity="sha512-PU5S6BA03fRv1Q5fpwXjg5nlRrgdoguZ74urFInkbABMCENyx5oP3hrDzYMMPh3qdLdknIvrGj3yqZ4JuU7Nag==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+	$("#append_message").scrollTop($("#append_message")[0].scrollHeight);
+	var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+	<!-- var socket = io(); -->
+    socket.on('connect', function() {
+        socket.emit('join_room', {
+			username: '{{session.username}}',
+			room: '{{mutualId}}'
+		});
+		let message_input = document.getElementById('message_input')
+		
+		document.getElementById('message_input_form').onsubmit = function (e) {
+			e.preventDefault();
+			let message = message_input.value.trim();
+			if (message.length){
+				socket.emit('send_message', {
+					username: '{{session.username}}',
+					room: '{{mutualId}}',
+					message: message,
+					user_to: '{{userInfo.user_id}}'
+				})
+			}
+			message_input.value = '';
+			message_input.focus();
+		}
+    });
+	
+	socket.on("receive_message", function (data) {
+        console.log(data.message);
+		if (data.username == "{{ session.username }}") {
+			var newNode = '<div class="d-flex flex-row-reverse bd-highlight m-3 w-auto"><div class="p-2 bd-highlight rounded text-wrap w-75" style="background-color:#82E0AA;">' + data.message +'</div</div>';
+		}
+		else{
+			var newNode = '<div class="d-flex flex-row bd-highlight m-3 w-auto"><div class="p-2 bd-highlight rounded text-wrap w-75" style="background-color:#85C1E9;">' + data.message +'</div></div>';
+		}
+		var theDiv = document.getElementById('append_message');
+		theDiv.innerHTML += newNode; 
+		$("#append_message").scrollTop($("#append_message")[0].scrollHeight);
+    });
+	
+
+</script>
+{%endblock body%}
