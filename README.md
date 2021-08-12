@@ -10,7 +10,7 @@ Application where user can post, chat and make friends.
 # Description
 This application was build for learning purpose.
 Its an application developed using Flask and PostgreSQL(Provided by Heroku) as backend.
-HTML, CSS, JavaScript and JQuery as frontend(Referred Bootstrap and Google Searches).
+HTML, CSS, JavaScript and jQuery as frontend(Referred Bootstrap and Google Searches).
 
 # Application Funcationality
 - Register
