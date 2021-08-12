@@ -10,7 +10,7 @@ Application where user can post, chat and make friends.
 # Description
 This application was build for learning purpose.
 Its an application developed using Flask and PostgreSQL(Provided by Heroku) as backend.
-HTML, CSS, JavaScript and JQuery as frontend(Refered Bootstrap and Google Searches).
+HTML, CSS, JavaScript and JQuery as frontend(Referred Bootstrap and Google Searches).
 
 # Application Funcationality
 - Register
@@ -26,6 +26,35 @@ HTML, CSS, JavaScript and JQuery as frontend(Refered Bootstrap and Google Search
 - User can Remove people from friend list
 - User can chat with friend(Without any delay considering good network and no delay in server response)
 - User can check friend post
+
+# Requirements
+- bidict==0.21.2
+- cachelib==0.2.0
+- cffi==1.14.6
+- click==8.0.1
+- colorama==0.4.4
+- dnspython==1.16.0
+- eventlet==0.30.2
+- Flask==2.0.1
+- Flask-Session==0.4.0
+- Flask-SocketIO==5.1.0
+- Flask-SQLAlchemy==2.5.1
+- gevent==21.1.2
+- gevent-websocket==0.10.1
+- greenlet==1.1.0
+- gunicorn==20.1.0
+- itsdangerous==2.0.1
+- Jinja2==3.0.1
+- MarkupSafe==2.0.1
+- psycopg2==2.9.1
+- pycparser==2.20
+- python-engineio==4.2.0
+- python-socketio==5.3.0
+- six==1.16.0
+- SQLAlchemy==1.4.21
+- Werkzeug==2.0.1
+- zope.event==4.5.0
+- zope.interface==5.4.0
 
 # Database Design
 - user Table
