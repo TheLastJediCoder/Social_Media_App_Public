@@ -27,35 +27,6 @@ HTML, CSS, JavaScript and jQuery as frontend(Referred Bootstrap and Google Searc
 - User can chat with friend(Without any delay considering good network and no delay in server response)
 - User can check friend post
 
-# Requirements
-- bidict==0.21.2
-- cachelib==0.2.0
-- cffi==1.14.6
-- click==8.0.1
-- colorama==0.4.4
-- dnspython==1.16.0
-- eventlet==0.30.2
-- Flask==2.0.1
-- Flask-Session==0.4.0
-- Flask-SocketIO==5.1.0
-- Flask-SQLAlchemy==2.5.1
-- gevent==21.1.2
-- gevent-websocket==0.10.1
-- greenlet==1.1.0
-- gunicorn==20.1.0
-- itsdangerous==2.0.1
-- Jinja2==3.0.1
-- MarkupSafe==2.0.1
-- psycopg2==2.9.1
-- pycparser==2.20
-- python-engineio==4.2.0
-- python-socketio==5.3.0
-- six==1.16.0
-- SQLAlchemy==1.4.21
-- Werkzeug==2.0.1
-- zope.event==4.5.0
-- zope.interface==5.4.0
-
 # Database Design
 - user Table
   | Field         | Type          | Key           |
@@ -99,3 +70,61 @@ HTML, CSS, JavaScript and jQuery as frontend(Referred Bootstrap and Google Searc
   | post_id           | Int           | PK            |
   | post_from_user_id | Int           | FK(user)      |
   | post              | varchar       |               |
+
+
+# Screenshot
+
+- Login Page
+
+  ![alt text](https://github.com/TheLastJediCoder/Social_Media_App_Public/blob/master/static/Login%20Page.png?raw=true)
+  
+- Login Page
+
+  ![alt text](https://github.com/TheLastJediCoder/Social_Media_App_Public/blob/master/static/Register.png?raw=true)
+
+- User Home Page
+
+  ![alt text](https://github.com/TheLastJediCoder/Social_Media_App_Public/blob/master/static/User%20Home%20Page.png?raw=true)
+  
+- Search Page
+
+  ![alt text](https://github.com/TheLastJediCoder/Social_Media_App_Public/blob/master/static/Find%20Friend.png?raw=true)
+  
+- Friend List Page
+
+  ![alt text](https://github.com/TheLastJediCoder/Social_Media_App_Public/blob/master/static/Friend%20List.png?raw=true)
+  
+- Friend/Chat Page
+
+  ![alt text](https://github.com/TheLastJediCoder/Social_Media_App_Public/blob/master/static/Chat.png?raw=true)
+  
+
+# Requirements
+- bidict==0.21.2
+- cachelib==0.2.0
+- cffi==1.14.6
+- click==8.0.1
+- colorama==0.4.4
+- dnspython==1.16.0
+- eventlet==0.30.2
+- Flask==2.0.1
+- Flask-Session==0.4.0
+- Flask-SocketIO==5.1.0
+- Flask-SQLAlchemy==2.5.1
+- gevent==21.1.2
+- gevent-websocket==0.10.1
+- greenlet==1.1.0
+- gunicorn==20.1.0
+- itsdangerous==2.0.1
+- Jinja2==3.0.1
+- MarkupSafe==2.0.1
+- psycopg2==2.9.1
+- pycparser==2.20
+- python-engineio==4.2.0
+- python-socketio==5.3.0
+- six==1.16.0
+- SQLAlchemy==1.4.21
+- Werkzeug==2.0.1
+- zope.event==4.5.0
+- zope.interface==5.4.0
+
