@@ -4,8 +4,8 @@ Application where user can post, chat and make friends.
 # Live Demo Hosted on Heroku(Might take time to load up initially as it is hosted on Free Account)
 - Any data you provide on website is not secure, so avoid using personal data.
 - https://flaskteststore2021.herokuapp.com/
-- id: test_user10	 password: test_user10@test.com
-- id: test_user11	 password: test_user11@test.com
+- id: test_user10@test.com	 password: 1234
+- id: test_user11@test.com	 password: 1234
 
 # Description
 This application was build for learning purpose.
